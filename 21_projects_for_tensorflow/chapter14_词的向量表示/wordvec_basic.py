@@ -56,6 +56,43 @@ def build_dataset(words,n_words):
     count[0][1]=unk_count
     reversed_dictionary=dict(zip(dictionary.values(),dictionary.keys()))
     return data,count,dictionary,reversed_dictionary#用数字代替的数据，对应词的频率，每个词对应的id
+#生成每一步的训练样本，使用skip-gram
+def generate_batch(batch_size,num_skips,skip_window):#产生成批数据函数
+    
+    # data_index相当于一个指针，初始为0
+    #每次生成一个batch，data_index会相应后撤
+    global data_index
+    assert batch_size%num_skips==0
+    assert num_skips<=2*skip_window
+    batch=np.ndarray(shape=(batch_size),dtype=np.int32)
+    labels=np.ndarray(shape=(batch_size,1),dtype=np.int32)
+    span=2*skip_window+1#[skip_window target skip_window]
+    buffer=collections.deque(maxlen=span)
+    #data_index是当前数据开始的位置
+    #产生batch后往后推1位
+    for _ in range(span):
+        buffer.append(data[data_index])
+        data_index=(data_index+1)%len(data)
+    for i in range(batch_size//num_skips):
+        #利用buffer生成batch
+        #buffer是一个长度位、为2*skip_window+1长度的word list
+        #一个buffer生成num_skips个数的样本
+        target=skip_window#target label at the center of the buffer
+        target_to_avoid=[skip_window]#保证样本不重复
+        for j in range(num_skips):
+            while target in target_to_avoid:
+                target=random.randint(0,span-1)
+            target_to_avoid.append(target)
+            batch[i*num_skips+j]=buffer[skip_window]
+            labels[i*num_skips+j,0]=buffer[target]
+        buffer.append(data[data_index])
+    data_index=(data_index+len(data)-span)%len(data)
+    return batch,labels
+    #默认情况下skip-window=1,num_skip=2
+    #此时是从连续的3个词钟生成2个样本
+        
+        
+        
 
         
         
@@ -66,4 +103,8 @@ if __name__ == '__main__':
     vocabulary =read_data(filename)
     data,count,dictionary,reversed_dictionary=build_dataset(vocabulary,50000)
     del vocabulary
-    print(data[:10]) 
+#     print(data[:10])
+    data_index=0 
+    batch,labels=generate_batch(batch_size=8, num_skips=2, skip_window=1)
+    for i in range(8):
+        print(batch[i],reversed_dictionary[batch[i]],'->',labels[i,0],reversed_dictionary[labels[i,0]])
