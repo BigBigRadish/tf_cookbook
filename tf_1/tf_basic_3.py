@@ -61,5 +61,12 @@ with tf.Session() as sess:
             print("After %d training steps,cross entropy on all dataset is %g" % (i,total_cross_entropy))#交叉熵越小说明与真实结果差距越小
     print(sess.run(w1))
     print(sess.run(w2))      
-    
+    '''
+    训练后
+    [[-2.54902911  3.07995534  2.89671016]
+ [-4.10980654  1.62482834  3.39671016]]
+[[-2.32208681]
+ [ 3.30206585]
+ [ 2.46258879]]
+ '''
 
