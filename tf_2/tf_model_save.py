@@ -26,6 +26,7 @@ with tf.Session() as sess:
     saver.restore(sess,'./model/model.ckpt')#加载模型进行计算
     print(sess.run(tf.get_default_graph().get_tensor_by_name("add:0")))#可以将前几层存储为模型，后一层进行训练
             #模型加载的时候阔以给变量进行重命名
+    #tensorflow提供了export_meta_graph函数，这个函数支持以json格式导出metagraphdefprotocol Buffer
     
     
     
