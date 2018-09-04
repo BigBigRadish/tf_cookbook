@@ -11,4 +11,8 @@ print("Training data size:",mnist.train.num_examples)
 print("validating data size:",mnist.validation.num_examples)
 print("testing data size:",mnist.test.num_examples)
 print("Example training data:",len(mnist.train.images))#是个list
-
+batch_size=100
+xs,ys=mnist.train.next_batch(batch_size)
+#从train的集合中选区batch_size个训练数据
+print("X shape:",xs.shape)    
+print("Y shape:",ys.shape) 
