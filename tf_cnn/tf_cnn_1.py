@@ -18,4 +18,8 @@ bias=tf.get_variable('bias',[16],initializer=tf.truncated_normal_initializer(0.1
 conv=tf.nn.conv2d(input,filter_weight,strides=[1,1,1,1],padding='SAME')
 #tf.nn.bias_add提供了一个方便的函数给每一个节点加上偏置项。
 bias=tf.nn.bias_add(conv,bias)
-actived_conv=tf.nn.relu(bias)#去线性化
+actived_conv=tf.nn.relu(bias)#去线性化  
+#池化
+#tf.nn.max_pool实现了最大池化层的前向传播过程，它的参数和tf.nn.conv2d函数类似
+#ksize提供了过滤器的尺寸，strides提供了步长信息，padding提供是否全0填充
+pool=tf.nn.max_pool(actived_conv,ksize=[1,3,3,1],strides=[1,2,2,1],padding='SAME')
