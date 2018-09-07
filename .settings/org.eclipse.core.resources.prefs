@@ -17,6 +17,7 @@ encoding//tf_cnn/tf_cnn_1.py=utf-8
 encoding//tf_cnn_Lenet5/mnist_eval.py=utf-8
 encoding//tf_cnn_Lenet5/mnist_inference.py=utf-8
 encoding//tf_cnn_Lenet5/mnist_train.py=utf-8
+encoding/Inception_v3=UTF-8
 encoding/tf_2=UTF-8
 encoding/tf_cnn=UTF-8
 encoding/tf_cnn_Lenet5=UTF-8
