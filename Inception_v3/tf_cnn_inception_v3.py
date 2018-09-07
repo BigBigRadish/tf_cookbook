@@ -9,7 +9,7 @@ import tensorflow as tf
 import tensorflow.contrib.slim as slim
 #定义简单的函数产生截断的正态分布
 trunc_normal = lambda stddev:tf.truncated_normal_initializer(0.0,stddev)
- 
+#详解https://blog.csdn.net/loveliuzz/article/details/79135583
 #定义函数 inception_v3_arg_scope 用来生成网络中经常用到的函数的默认参数
 def inception_v3_arg_scope(weight_decay=0.00004,stddev=0.1,
                            batch_norm_var_collection="moving_vars"):
