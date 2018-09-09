@@ -20,6 +20,7 @@ encoding//tf_cnn_Lenet5/mnist_inference.py=utf-8
 encoding//tf_cnn_Lenet5/mnist_train.py=utf-8
 encoding//tf_data_procee_fram/tf_data_demo1.py=utf-8
 encoding//tf_data_procee_fram/tf_data_demo2.py=utf-8
+encoding//tf_data_procee_fram/tf_data_op_api.py=utf-8
 encoding//tf_threads/tf_coordinator_queueRunner.py=utf-8
 encoding//tf_threads/tf_data_process_fram.py=utf-8
 encoding//tf_threads/tf_input_file_queue.py=utf-8
