@@ -32,6 +32,7 @@ encoding//tf_threads/tf_queue.py=utf-8
 encoding//tf_threads/tfrecord_write_read.py=utf-8
 encoding/Inception_v3=UTF-8
 encoding/tf_2=UTF-8
+encoding/tf_Nlp=UTF-8
 encoding/tf_RNN=UTF-8
 encoding/tf_cnn=UTF-8
 encoding/tf_cnn_Lenet5=UTF-8
