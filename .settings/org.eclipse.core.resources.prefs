@@ -16,6 +16,7 @@ encoding//tf_2_mnist_best/mnist_inference.py=utf-8
 encoding//tf_2_mnist_best/mnist_train.py=utf-8
 encoding//tf_Nlp/tf_nlp_entropy.py=utf-8
 encoding//tf_Nlp/tf_nlp_word_no.py=utf-8
+encoding//tf_Nlp/tf_ptb_batching.py=utf-8
 encoding//tf_Nlp/tf_words_no2.py=utf-8
 encoding//tf_RNN/tf_lstm.py=utf-8
 encoding//tf_RNN/tf_rnn_app_sin.py=utf-8
