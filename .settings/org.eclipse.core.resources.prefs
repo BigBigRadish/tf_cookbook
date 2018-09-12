@@ -42,4 +42,5 @@ encoding/tf_Nlp=UTF-8
 encoding/tf_RNN=UTF-8
 encoding/tf_cnn=UTF-8
 encoding/tf_cnn_Lenet5=UTF-8
+encoding/tf_nlp_macihne_translation=UTF-8
 encoding/tf_threads=UTF-8
