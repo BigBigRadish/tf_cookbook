@@ -14,6 +14,7 @@ encoding//tf_2/tf_model_save.py=utf-8
 encoding//tf_2_mnist_best/mnist_eval.py=utf-8
 encoding//tf_2_mnist_best/mnist_inference.py=utf-8
 encoding//tf_2_mnist_best/mnist_train.py=utf-8
+encoding//tf_Nlp/tf_nlp_embeding_softmax.py=utf-8
 encoding//tf_Nlp/tf_nlp_entropy.py=utf-8
 encoding//tf_Nlp/tf_nlp_word_no.py=utf-8
 encoding//tf_Nlp/tf_ptb_batching.py=utf-8
