@@ -16,7 +16,7 @@ image_rows,image_cols=28,28
 #通过keras封装好的api加载mnist数据。其中trainX就是毅一个600000*28*28的数组，trainY为每一张图片的数字
 (trainX,trainY),(testX,testY)=mnist.load_data()
 #因为不同的底层对输入的要求不一样，所以这里需要根据对图像编码的格式要求设置输入层的格式
-if K.image_data_format()=='channels_first':
+if k.image_data_format()=='channels_first':
     trainX=trainX.reshape(trainX.shape[0],1,image_rows,image_cols)
     testX=testX.reshape(testX.shape[0],1,image_rows,image_cols)
     #因为MNIST中的图片是黑白的，所以第一维的取值为1

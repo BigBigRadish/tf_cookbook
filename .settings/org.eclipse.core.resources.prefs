@@ -25,6 +25,7 @@ encoding//tf_RNN/tf_rnn_app_sin.py=utf-8
 encoding//tf_RNN/tf_rnn_demo1.py=utf-8
 encoding//tf_api_keras/__init__.py=utf-8
 encoding//tf_api_keras/tf_keras_LeNet-5.py=utf-8
+encoding//tf_api_keras/tf_keras_lstm_sentiment.py=utf-8
 encoding//tf_cnn/tf_cnn_1.py=utf-8
 encoding//tf_cnn_Lenet5/mnist_eval.py=utf-8
 encoding//tf_cnn_Lenet5/mnist_inference.py=utf-8
