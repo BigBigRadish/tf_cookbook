@@ -11,4 +11,5 @@ input1=tf.constant([1.0,2.0,3.0],name='input1')
 input2=tf.Variable(tf.random_uniform([3]),name='input2')
 output=tf.add_n([input1,input2],name='add')
 #生成一个写日志的writer，并将当前的temnsorflow计算图写入日志
-writer=tf.summary.FileWriter('log',tf.get_default_graph())
+writer=tf.summary.FileWriter('log',tf.get_default_graph())#需要pip install tb-nightly
+#解决方案：https://blog.csdn.net/handsome_for_kill/article/details/80269595
