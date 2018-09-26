@@ -20,7 +20,8 @@ train_step=tf.train.GradientDescentOptimizer(0.5).minimize(loss)
 #定义预测的正确率作为指标
 acc_value=tf.reduce_mean(tf.keras.metrics.categorical_accuracy(y_,y))
 #使用原生态的tensorflow训练模型，可以有效使用分布式
-with tf.Session() as sess:
+with tf.Session(config=tf.ConfigProto(log_device_placement=True)) as sess:
+    
     tf.global_variables_initializer().run()
     for i in range(10000):
         xs,ys=mnist_data.train.next_batch(100)

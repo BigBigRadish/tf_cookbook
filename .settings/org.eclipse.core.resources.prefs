@@ -39,6 +39,7 @@ encoding//tf_nlp_macihne_translation/tf_nlp_padding_batching.py=utf-8
 encoding//tf_nlp_macihne_translation/word_process/tf_nlp_word_no.py=utf-8
 encoding//tf_nlp_macihne_translation/word_process/tf_words_no2.py=utf-8
 encoding//tf_tensorBoard/tf_tb_intro.py=utf-8
+encoding//tf_tensorBoard/tf_tb_mnist.py=utf-8
 encoding//tf_threads/tf_coordinator_queueRunner.py=utf-8
 encoding//tf_threads/tf_data_process_fram.py=utf-8
 encoding//tf_threads/tf_input_file_queue.py=utf-8

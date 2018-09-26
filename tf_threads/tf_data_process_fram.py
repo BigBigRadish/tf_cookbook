@@ -27,18 +27,18 @@ capacity=min_after_dequeue+3*batch_size
 image_batch,label_batch=tf.train.shuffle_batch([distorted_image,label],batch_size=batch_size,capacity=capacity,min_after_dequeue=min_after_dequeue)
 #定义神经网络结构及优化过程
 learning_rate=0.001
-logit=inference(image_batch)
-loss=calc_loss(logit,label_batch)
-train_step=tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
-#声明会话并运行神经网络的优化过程
-with tf.Session() as sess:
-    sess.run((tf.global_variables_initializer(),tf.local_variables_initializer()))
-    coord=tf.train.Coordinator()
-    threads=tf.train.start_queue_runners(sess=sess,coord=coord)
-    #神经网络训练过程
-    TRAINING_ROUND=5000
-    for i in range(TRAINING_ROUND):
-        sess.run(train_step)
-    #停止所有线程
-    coord.request_stop()
-    coord.join(threads)
+# logit=inference(image_batch)
+# loss=calc_loss(logit,label_batch)
+# train_step=tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
+# #声明会话并运行神经网络的优化过程
+# with tf.Session() as sess:
+#     sess.run((tf.global_variables_initializer(),tf.local_variables_initializer()))
+#     coord=tf.train.Coordinator()
+#     threads=tf.train.start_queue_runners(sess=sess,coord=coord)
+#     #神经网络训练过程
+#     TRAINING_ROUND=5000
+#     for i in range(TRAINING_ROUND):
+#         sess.run(train_step)
+#     #停止所有线程
+#     coord.request_stop()
+#     coord.join(threads)
