@@ -57,7 +57,7 @@ def build_dataset(words,n_words):
     reversed_dictionary=dict(zip(dictionary.values(),dictionary.keys()))
     return data,count,dictionary,reversed_dictionary#用数字代替的数据，对应词的频率，每个词对应的id
 #生成每一步的训练样本，使用skip-gram
-def generate_batch(batch_size,num_skips,skip_window):#产生成批数据函数
+def generate_batch(batch_size,num_skips,skip_window):#产生批数据处理函数
     
     # data_index相当于一个指针，初始为0
     #每次生成一个batch，data_index会相应后撤
