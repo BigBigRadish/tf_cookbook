@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//21_projects_for_tensorflow/__init__.py=utf-8
+encoding//21_projects_for_tensorflow/chapter13_\u5E8F\u5217\u5206\u7C7B\u8BE6\u89E3/rnn_classic_model.py=utf-8
 encoding//21_projects_for_tensorflow/chapter13_\u5E8F\u5217\u5206\u7C7B\u8BE6\u89E3/toySequenceData.py=utf-8
 encoding//Inception_v3/tf_cnn_inception_v3.py=utf-8
 encoding//tf_1/tf_basic_1.py=utf-8

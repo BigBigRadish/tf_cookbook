@@ -53,7 +53,7 @@ class ToySequenceData(object):
 if __name__ == '__main__':
     SequenceData=ToySequenceData()
     batch_data,batch_labels,batch_seqlen=SequenceData.next(32)
-    print(batch_data) 
+    print(batch_labels) 
             
                 
             
