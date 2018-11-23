@@ -16,6 +16,8 @@ import numpy as np
 import urllib
 import tensorflow as tf
 import math
+import matplotlib.pyplot as plt
+from sklearn.manifold import TSNE
 url='http://mattmahoney.net/dc/'
 def maybe_download(filename,expected_bytes):#数据下载
     if not os.path.exists(filename):
@@ -103,7 +105,7 @@ def build_model(vocabulary_size):
     #构造损失时选取的噪声词数量
     num_example=64
     graphy=tf.Graph()
-    with graphy.as_default(graphy=graphy):
+    with graphy.as_default():
         #输入的batch
         train_inputs=tf.placeholder(tf.int32,shape=[batch_size])
         train_labels=tf.placeholder(tf.int32,shape=[batch_size,1])
@@ -126,7 +128,7 @@ def build_model(vocabulary_size):
             similarity=tf.matmul(valid_embedding,nomalized_embedding,transpose_b=True)
             init=tf.global_variables_initializer()
             num_steps=100001
-            with tf.Session as session:
+            with tf.Session(graphy=graphy) as session:
                 #初始化变量
                 init.run()
                 print ('initialized !')
@@ -153,19 +155,38 @@ def build_model(vocabulary_size):
                                 close_word=reversed_dictionary[nearest[k]]
                                 log_str='%s %s,'%(log_str,close_word)
                             print(log_str)
-                    final_embed=nomalized_embedding.eval()
-                                
+                final_embed=nomalized_embedding.eval()
+                return final_embed
+def plot_with_labels(low_dim_embs,labels,filename='./tsn.png'):  
+    assert low_dim_embs.shape[0]>len(labels),'more labels than embedding'
+    plt.figure(figure=(8,18))#in inches
+    for i ,label in enumerate(labels):
+        x,y=low_dim_embs[1:]
+        plt.scatter(x,y)
+        plt.annotate(label,xy=(x,y),xytest=(5,2),textcoords='offset points',ha='right',va='bottom')
+    plt.savefig(filename)
+    
+    
+    
+                                  
                             
                             
             
 if __name__ == '__main__':
+    vocabulary_size=50000
     #filename=maybe_download('text8.zip', 31344016)
     filename='./text8.zip'
     vocabulary =read_data(filename)
     data,count,dictionary,reversed_dictionary=build_dataset(vocabulary,50000)
     del vocabulary
 #     print(data[:10])
-    data_index=0 
-    batch,labels=generate_batch(batch_size=8, num_skips=2, skip_window=1)
+#     data_index=0 
+#     batch,labels=generate_batch(batch_size=8, num_skips=2, skip_window=1)
 #     for i in range(8):
 #         print(batch[i],reversed_dictionary[batch[i]],'->',labels[i,0],reversed_dictionary[labels[i,0]])
+    final_embed=build_model(vocabulary_size)
+    tsne=TSNE(perplexity=30,n_components=2,init='pca',n_iter=5000)
+    plot_only=500
+    low_dim_embs=tsne.fit_transform(final_embed[:plot_only,:])
+    labels=[reversed_dictionary[i] for i in range(plot_only)]
+    plot_with_labels(low_dim_embs, labels)
