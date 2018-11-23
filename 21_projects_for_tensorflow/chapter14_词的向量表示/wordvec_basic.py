@@ -95,7 +95,7 @@ def generate_batch(batch_size,num_skips,skip_window):#产生批数据处理函�
 def build_model(vocabulary_size):
     batch_size=128
     embedding_size=128#wordvector词向量潜入空间位128维的向量
-    skip_widnow=1
+    skip_window=1
     num_skips=2
     valid_size=16#每次验证16个词
     valid_window=100#这16个词是从100个词中挑选出来的
@@ -103,7 +103,7 @@ def build_model(vocabulary_size):
     #构造损失时选取的噪声词数量
     num_example=64
     graphy=tf.Graph()
-    with graphy.as_default():
+    with graphy.as_default(graphy=graphy):
         #输入的batch
         train_inputs=tf.placeholder(tf.int32,shape=[batch_size])
         train_labels=tf.placeholder(tf.int32,shape=[batch_size,1])
@@ -125,13 +125,39 @@ def build_model(vocabulary_size):
             valid_embedding=tf.nn.embedding_lookup(nomalized_embedding,valid_dataset)
             similarity=tf.matmul(valid_embedding,nomalized_embedding,transpose_b=True)
             init=tf.global_variables_initializer()
+            num_steps=100001
+            with tf.Session as session:
+                #初始化变量
+                init.run()
+                print ('initialized !')
+                average_loss=0
+                for step in range(num_steps):
+                    batch_inputs,batch_labels=generate_batch(batch_size, num_skips, skip_window)
+                    feed_dict={train_inputs:batch_inputs,train_labels:batch_labels}
+                    #优化一步
+                    _,loss_val=session.run([optimizer,loss],feed_dict=feed_dict)#投食
+                    average_loss=loss_val
+                    if step%2000==0:#2000个batch的平均损失
+                        if step>0:
+                            print('Average LOSS at step',step,':',average_loss)
+                    if step%10000==0:
+                        #sim是验证词与词之间的相似度
+                        sim=similarity.eval()
+                        #一共有valid_size个验证词
+                        for i in range(valid_size):
+                            valid_word=reversed_dictionary[valid_examples[i]]
+                            topk=8
+                            nearest=(-sim[1,:]).argsort()[1:topk+1]
+                            log_str='nearest to %s' %valid_word
+                            for k in range(topk):
+                                close_word=reversed_dictionary[nearest[k]]
+                                log_str='%s %s,'%(log_str,close_word)
+                            print(log_str)
+                    final_embed=nomalized_embedding.eval()
+                                
+                            
+                            
             
-        
-        
-
-        
-        
- 
 if __name__ == '__main__':
     #filename=maybe_download('text8.zip', 31344016)
     filename='./text8.zip'
@@ -141,5 +167,5 @@ if __name__ == '__main__':
 #     print(data[:10])
     data_index=0 
     batch,labels=generate_batch(batch_size=8, num_skips=2, skip_window=1)
-    for i in range(8):
-        print(batch[i],reversed_dictionary[batch[i]],'->',labels[i,0],reversed_dictionary[labels[i,0]])
+#     for i in range(8):
+#         print(batch[i],reversed_dictionary[batch[i]],'->',labels[i,0],reversed_dictionary[labels[i,0]])
