@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-Created on 2018年9月1日
+Created on 2018年11月22日
 
 @author: Zhukun Luo
 Jiangxi university of finance and economics
@@ -15,6 +15,7 @@ import zipfile
 import numpy as np
 import urllib
 import tensorflow as tf
+import math
 url='http://mattmahoney.net/dc/'
 def maybe_download(filename,expected_bytes):#数据下载
     if not os.path.exists(filename):
@@ -60,7 +61,7 @@ def build_dataset(words,n_words):
 def generate_batch(batch_size,num_skips,skip_window):#产生批数据处理函数
     
     # data_index相当于一个指针，初始为0
-    #每次生成一个batch，data_index会相应后撤
+    #每次生成一个batch，data_index会相应后撤 
     global data_index
     assert batch_size%num_skips==0
     assert num_skips<=2*skip_window
@@ -90,7 +91,41 @@ def generate_batch(batch_size,num_skips,skip_window):#产生批数据处理函�
     return batch,labels
     #默认情况下skip-window=1,num_skip=2
     #此时是从连续的3个词钟生成2个样本
-        
+#定义模型，一个单词预测另外一个单词，使用NCE损失
+def build_model(vocabulary_size):
+    batch_size=128
+    embedding_size=128#wordvector词向量潜入空间位128维的向量
+    skip_widnow=1
+    num_skips=2
+    valid_size=16#每次验证16个词
+    valid_window=100#这16个词是从100个词中挑选出来的
+    valid_examples=np.random.choice(valid_window,valid_size,replace=True)
+    #构造损失时选取的噪声词数量
+    num_example=64
+    graphy=tf.Graph()
+    with graphy.as_default():
+        #输入的batch
+        train_inputs=tf.placeholder(tf.int32,shape=[batch_size])
+        train_labels=tf.placeholder(tf.int32,shape=[batch_size,1])
+        #用于验证的词
+        valid_dataset=tf.constant(valid_examples,dtype=tf.int32)
+        with tf.device('/cpu:0'):
+            embedding=tf.Variable(tf.random_uniform([vocabulary_size,embedding_size],-1.0,1.0))
+            embd=tf.nn.embedding_lookup(embedding,train_inputs)
+            #创建两个变量用于NCE loss
+            nce_weights=tf.Variable(tf.truncated_normal([vocabulary_size,embedding_size],stddev=1.0/math.sqrt(embedding_size)))#
+            nce_bias=tf.Variable(tf.zeros([vocabulary_size]))
+            #tf.nn.nce_loss会自动选取噪声词，并且形成损失
+            loss=tf.reduce_mean(tf.nn.nce_loss(weights=nce_weights,biases=nce_bias,labels=train_labels,inputs=embd,num_sampled=num_example,num_classes=vocabulary_size))
+            optimizer=tf.train.GradientDescentOptimizer(1.0).minimize(loss)
+            #对embedding层做归一化
+            norm=tf.sqrt(tf.reduce_sum(tf.square(embedding),1,keep_dims=True))
+            nomalized_embedding=embedding/norm
+            #找出和验证词的embedding并计算他们和所有单词的相似度
+            valid_embedding=tf.nn.embedding_lookup(nomalized_embedding,valid_dataset)
+            similarity=tf.matmul(valid_embedding,nomalized_embedding,transpose_b=True)
+            init=tf.global_variables_initializer()
+            
         
         
 
